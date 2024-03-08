@@ -1,0 +1,29 @@
+[package]
+name = "desktop-server-functions"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = { version = "0.6.12", optional = true }
+dioxus = { version = "0.4.3" }
+dioxus-desktop = { version = "0.4.3", optional = true }
+dioxus-fullstack = { version = "0.4.3" }
+dioxus-router = "0.4.3"
+serde = "1.0.197"
+tokio = { version = "1.36.0", features = ["full"], optional = true }
+
+
+[features]
+default = []
+ssr = ["axum", "tokio", "dioxus-fullstack/axum"]
+desktop = ["dioxus-desktop"]
+
+[[bin]]
+name = "client"
+path = "src/bin/client.rs"
+required-features = ["desktop"]
+
+[[bin]]
+name = "server"
+path = "src/bin/server.rs"
+required-features = ["ssr"]
